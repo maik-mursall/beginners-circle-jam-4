@@ -8,6 +8,8 @@ namespace Combat
         public float Health { get; private set; } = 50f;
         [SerializeField] private float maxHealth = 50f;
 
+        public float GetHealthPercentage => Health / maxHealth;
+
         public event EventHandler Died;
         public event EventHandler Damaged;
         public event EventHandler Healed;
