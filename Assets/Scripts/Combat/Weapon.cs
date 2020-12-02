@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Combat
@@ -11,7 +10,7 @@ namespace Combat
         
         [SerializeField] private float damage = 10f;
         
-        private readonly List<Damageable> _hitList = new List<Damageable>();
+        private readonly HashSet<Damageable> _hitList = new HashSet<Damageable>();
 
         private bool _isAttacking;
         public bool IsAttacking
@@ -23,6 +22,7 @@ namespace Combat
 
                 if (!value)
                 {
+                    EvaluateAttack();
                     _hitList.Clear();
                 }
             }
@@ -36,6 +36,14 @@ namespace Combat
             }
         }
 
+        private void EvaluateAttack()
+        {
+            foreach (var damageable in _hitList)
+            {
+                damageable.TakeDamage(damage);
+            }
+        }
+
         private void DoAttack()
         {
             var colliderRadius = sphereCollider.radius;
@@ -46,11 +54,7 @@ namespace Combat
             {
                 if (raycastHit.transform.TryGetComponent(out Damageable targetDamageable))
                 {
-                    if (_hitList.Contains(targetDamageable)) return;
-                    
-                    targetDamageable.TakeDamage(damage);
-                    
-                    _hitList.Add(targetDamageable);
+                   _hitList.Add(targetDamageable);
                 }
             }
         }
