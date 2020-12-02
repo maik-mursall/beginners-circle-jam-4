@@ -7,6 +7,9 @@ namespace Combat
     {
         public float Health { get; private set; } = 50f;
         [SerializeField] private float maxHealth = 50f;
+        [SerializeField] private float critHitDistance = 0.9f;
+
+        public float CritHitDistance => critHitDistance;
 
         public float GetHealthPercentage => Health / maxHealth;
 
