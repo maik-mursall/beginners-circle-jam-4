@@ -1,11 +1,17 @@
 fileFormatVersion: 2
-guid: 215bad6a72c810f419a436da34e16881
+guid: 14b6fa46479e25e4991061b291926f93
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
-      74: -623603649343465320
-    second: Scene
+      74: -7657659144133706179
+    second: ArmatureRobotAction
+  - first:
+      74: 4949235212559594826
+    second: ArmatureRobot|ArmatureRobotAction
+  - first:
+      74: -3454178063882602475
+    second: ArmatureRobot|Atack
   externalObjects: {}
   materials:
     materialImportMode: 1
