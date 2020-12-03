@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8159667068570671722}
   - component: {fileID: 8159667068570671717}
   - component: {fileID: 8159667068570671716}
+  - component: {fileID: 1420000512}
   m_Layer: 8
   m_Name: Target
   m_TagString: Untagged
@@ -60,6 +61,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  critHitDistance: 0.9
+--- !u!114 &1420000512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8159667068570671723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b4d4a63664c4e4dae9455e993f0a21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8159667068677489527
 GameObject:
   m_ObjectHideFlags: 0

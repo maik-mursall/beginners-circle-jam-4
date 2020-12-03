@@ -53,8 +53,9 @@ namespace Combat
         {
             foreach (var hitInfo in _hitList)
             {
-                var damageFactor = hitInfo.Width / hitInfo.Distance;
-                hitInfo.Damageable.TakeDamage(damage * (damageFactor >= hitInfo.Damageable.CritHitDistance ? 2f : damageFactor));
+                var damageFactor =  Mathf.Clamp01(1 - (hitInfo.Distance / hitInfo.Width));
+                var wasCritical = damageFactor >= hitInfo.Damageable.CritHitDistance;
+                hitInfo.Damageable.TakeDamage(damage * (wasCritical ? 2f : damageFactor), wasCritical);
             }
         }
 
@@ -106,12 +107,6 @@ namespace Combat
                     }
                 }
             }
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(sphereCollider.transform.position + sphereCollider.center, sphereCollider.radius);
         }
     }
 }
