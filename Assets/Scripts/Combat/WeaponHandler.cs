@@ -8,14 +8,14 @@ namespace Combat
     {
         [SerializeField] private Weapon currentWeapon;
 
-        private Animator _animator;
+        [SerializeField] private Animator animator;
         
         private static readonly int DoAttackHash = Animator.StringToHash("doAttack");
 
-        private void Start()
-        {
-            _animator = GetComponent<Animator>();
-        }
+        // private void Start()
+        // {
+        //     _animator = GetComponent<Animator>();
+        // }
 
         private void Update()
         {
@@ -27,7 +27,7 @@ namespace Combat
 
         private void DoAttack()
         {
-            _animator.SetTrigger(DoAttackHash);
+            animator.SetTrigger(DoAttackHash);
         }
 
         public void SetWeaponIsAttacking()
