@@ -1,8 +1,50 @@
 fileFormatVersion: 2
-guid: 025db6ec9c7276a4ea77e85f96ca86db
+guid: 811f4a5cc8cad684f98c099748f0f61e
 ModelImporter:
   serializedVersion: 20101
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -6173074971478392158
+    second: WalkCycle.001
+  - first:
+      74: -4405619503343681686
+    second: Armature.001|Attack
+  - first:
+      74: -8048142195542268512
+    second: Armature.001|Attack_Dash
+  - first:
+      74: 383619828656439165
+    second: Armature.001|WalkCycle.002
+  - first:
+      74: 5480605474150579354
+    second: Armature.001|WalkCycle_Real
+  - first:
+      74: -6991723973015678290
+    second: Armature.001|Walking
+  - first:
+      74: 5893897525207525277
+    second: Cylinder|Attack
+  - first:
+      74: -5070602447276491942
+    second: Cylinder|WalkCycle.002
+  - first:
+      74: -2235389317353865923
+    second: Cylinder|Walking
+  - first:
+      74: 5392717614986158386
+    second: ParentCopy|Attack
+  - first:
+      74: -5190028084739554029
+    second: ParentCopy|WalkCycle.002
+  - first:
+      74: 4838102753267901676
+    second: Plane|Attack
+  - first:
+      74: -5845598649397223712
+    second: Plane|Attack_Dash
+  - first:
+      74: 3860096441657739940
+    second: Plane|WalkCycle.002
   externalObjects: {}
   materials:
     materialImportMode: 1

@@ -12,6 +12,9 @@ ModelImporter:
   - first:
       74: -3454178063882602475
     second: ArmatureRobot|Atack
+  - first:
+      74: 4831380224863134114
+    second: ArmatureRobot|Idle
   externalObjects: {}
   materials:
     materialImportMode: 1
