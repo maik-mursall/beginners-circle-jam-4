@@ -11,7 +11,7 @@ namespace Combat
 
         private void Start()
         {
-            damageable.Damaged += (object src, EventArgs args) => OnDamage(src, (DamageEventArgs)args);
+            damageable.Damaged += (src, args) => OnDamage(src, (DamageEventArgs)args);
             slider.value = damageable.GetHealthPercentage;
         }
         
