@@ -25,6 +25,8 @@ namespace Combat
         
         private readonly HashSet<DamageHitInfo> _hitList = new HashSet<DamageHitInfo>();
 
+        public bool isReady = true;
+
         private bool _isAttacking;
         public bool IsAttacking
         {
@@ -37,29 +39,34 @@ namespace Combat
 
                 if (!value)
                 {
+                    foreach (var damageHitInfo in _hitList)
+                    {
+                        EvaluateAttack(damageHitInfo);
+                    }
+
                     _hitList.Clear();
+                }
+                else
+                {
+                    isReady = false;
                 }
             }
         }
-
+        
         private void EvaluateAttack(DamageHitInfo hitInfo)
         {
             var distancePercent = hitInfo.Distance / hitInfo.Width;
-
-            if (distancePercent > 0)
+            if (distancePercent <= 1f)
             {
                 var damageFactor =  Mathf.Clamp01(1 - distancePercent);
                 var wasCritical = damageFactor >= hitInfo.Damageable.CritHitDistance;
                 hitInfo.Damageable.TakeDamage(damage * (wasCritical ? 2f : damageFactor), wasCritical);   
             }
-
-            _hitList.Remove(hitInfo);
         }
 
         private float CalculateDistanceToOther(Collider other)
         {
-            var colliderTransform = sphereCollider.transform;
-            var colliderPosition = colliderTransform.position + sphereCollider.center;
+            var colliderPosition = sphereCollider.transform.position + sphereCollider.center;
             var flattenedColliderPosition = new Vector3
             {
                 x = colliderPosition.x,
@@ -67,8 +74,7 @@ namespace Combat
                 z = colliderPosition.z
             };
 
-            var targetBounds = other.bounds;
-            var targetCenter = targetBounds.center;
+            var targetCenter = other.bounds.center;
             var flattenedTargetPosition = new Vector3
             {
                 x = targetCenter.x,
@@ -116,6 +122,7 @@ namespace Combat
                     if (damageHitInfo.Damageable.Equals(targetDamageable))
                     {
                         EvaluateAttack(damageHitInfo);
+                        _hitList.Remove(damageHitInfo);
 
                         return;
                     }

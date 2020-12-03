@@ -19,7 +19,7 @@ namespace Combat
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && !currentWeapon.IsAttacking)
+            if (Input.GetMouseButtonDown(0) && currentWeapon.isReady)
             {
                 DoAttack();
             }
@@ -42,6 +42,13 @@ namespace Combat
             if (currentWeapon)
             {
                 currentWeapon.IsAttacking = false;
+            }
+        }
+        public void SetWeaponIsReady()
+        {
+            if (currentWeapon)
+            {
+                currentWeapon.isReady = true;
             }
         }
     }
