@@ -3,10 +3,19 @@ using UnityEngine;
 
 namespace Combat
 {
+    public class DamageEventArgs : EventArgs
+    {
+        public float Damage;
+        public bool WasCritical;
+    }
+    
     public class Damageable : MonoBehaviour
     {
         public float Health { get; private set; } = 50f;
         [SerializeField] private float maxHealth = 50f;
+        [SerializeField] private float critHitDistance = 0.9f;
+
+        public float CritHitDistance => critHitDistance;
 
         public float GetHealthPercentage => Health / maxHealth;
 
@@ -25,7 +34,7 @@ namespace Combat
             OnHeal(EventArgs.Empty);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, bool wasCritical = false)
         {
             Health -= damage;
             if (Health <= 0f)
@@ -34,11 +43,15 @@ namespace Combat
             }
             else
             {
-                OnDamage(EventArgs.Empty);
+                OnDamage(new DamageEventArgs
+                {
+                    WasCritical = wasCritical,
+                    Damage = damage
+                });
             }
         }
 
-        private void OnDamage(EventArgs e)
+        private void OnDamage(DamageEventArgs e)
         {
             Damaged?.Invoke(this, e);
         }
