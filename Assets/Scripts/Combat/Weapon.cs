@@ -56,9 +56,11 @@ namespace Combat
         private void EvaluateAttack(DamageHitInfo hitInfo)
         {
             var distancePercent = hitInfo.Distance / hitInfo.Width;
-            if (distancePercent <= 1f)
+
+            var hitSlop = 1 + sphereCollider.radius / hitInfo.Width;
+            if (distancePercent <= hitSlop)
             {
-                var damageFactor =  Mathf.Clamp01(1 - distancePercent);
+                var damageFactor =  hitSlop - distancePercent;
                 var wasCritical = damageFactor >= hitInfo.Damageable.CritHitDistance;
                 hitInfo.Damageable.TakeDamage(damage * (wasCritical ? 2f : damageFactor), wasCritical);   
             }
@@ -67,6 +69,7 @@ namespace Combat
         private float CalculateDistanceToOther(Collider other)
         {
             var colliderPosition = sphereCollider.transform.position + sphereCollider.center;
+            
             var flattenedColliderPosition = new Vector3
             {
                 x = colliderPosition.x,
