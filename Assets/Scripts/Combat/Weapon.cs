@@ -33,39 +33,33 @@ namespace Combat
             {
                 _isAttacking = value;
 
+                sphereCollider.enabled = value;
+
                 if (!value)
                 {
-                    EvaluateAttack();
                     _hitList.Clear();
                 }
             }
         }
-        
-        private void Update()
-        {
-            if (IsAttacking)
-            {
-                DoAttack();
-            }
-        }
 
-        private void EvaluateAttack()
+        private void EvaluateAttack(DamageHitInfo hitInfo)
         {
-            foreach (var hitInfo in _hitList)
+            var distancePercent = hitInfo.Distance / hitInfo.Width;
+
+            if (distancePercent > 0)
             {
-                var damageFactor =  Mathf.Clamp01(1 - (hitInfo.Distance / hitInfo.Width));
+                var damageFactor =  Mathf.Clamp01(1 - distancePercent);
                 var wasCritical = damageFactor >= hitInfo.Damageable.CritHitDistance;
-                hitInfo.Damageable.TakeDamage(damage * (wasCritical ? 2f : damageFactor), wasCritical);
+                hitInfo.Damageable.TakeDamage(damage * (wasCritical ? 2f : damageFactor), wasCritical);   
             }
+
+            _hitList.Remove(hitInfo);
         }
 
-        private void DoAttack()
+        private float CalculateDistanceToOther(Collider other)
         {
-            var colliderRadius = sphereCollider.radius;
             var colliderTransform = sphereCollider.transform;
             var colliderPosition = colliderTransform.position + sphereCollider.center;
-            var hits = Physics.SphereCastAll(colliderPosition, colliderRadius, colliderTransform.forward, colliderRadius, layerMask);
-            
             var flattenedColliderPosition = new Vector3
             {
                 x = colliderPosition.x,
@@ -73,37 +67,57 @@ namespace Combat
                 z = colliderPosition.z
             };
 
-            foreach (var castHit in hits)
+            var targetBounds = other.bounds;
+            var targetCenter = targetBounds.center;
+            var flattenedTargetPosition = new Vector3
             {
-                if (castHit.transform.TryGetComponent(out Damageable targetDamageable))
-                {
-                    var targetBounds = castHit.collider.bounds;
-                    var targetCenter = targetBounds.center;
-                    var flattenedTargetPosition = new Vector3
-                    {
-                        x = targetCenter.x,
-                        y = 0,
-                        z = targetCenter.z
-                    };
+                x = targetCenter.x,
+                y = 0,
+                z = targetCenter.z
+            };
+            
+            return Vector3.Distance(flattenedTargetPosition, flattenedColliderPosition);
+        }
 
-                    var distance = Vector3.Distance(flattenedTargetPosition, flattenedColliderPosition);
-                    
-                    if (!_hitList.Add(new DamageHitInfo
-                        {
-                            Damageable = targetDamageable,
-                            Distance = distance,
-                            Width = targetBounds.extents.x
-                        }
-                    ))
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.transform.TryGetComponent(out Damageable targetDamageable))
+            {
+                _hitList.Add(new DamageHitInfo
                     {
-                        foreach (var damageHitInfo in _hitList)
-                        {
-                            var hitInfo = damageHitInfo;
-                            if (hitInfo.Damageable.Equals(targetDamageable))
-                            {
-                                hitInfo.Distance = Mathf.Min(hitInfo.Distance, distance);
-                            }
-                        }
+                        Damageable = targetDamageable,
+                        Distance = CalculateDistanceToOther(other),
+                        Width = other.bounds.extents.x
+                    }
+                );
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.transform.TryGetComponent(out Damageable targetDamageable))
+            {
+                foreach (var damageHitInfo in _hitList)
+                {
+                    var hitInfo = damageHitInfo;
+                    if (hitInfo.Damageable.Equals(targetDamageable))
+                    {
+                        hitInfo.Distance = Mathf.Min(hitInfo.Distance, CalculateDistanceToOther(other));
+                    }
+                }
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.transform.TryGetComponent(out Damageable targetDamageable))
+            {
+                foreach (var damageHitInfo in _hitList)
+                {
+                    if (damageHitInfo.Damageable.Equals(targetDamageable))
+                    {
+                        EvaluateAttack(damageHitInfo);
+
+                        return;
                     }
                 }
             }
