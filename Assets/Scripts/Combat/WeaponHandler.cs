@@ -8,18 +8,18 @@ namespace Combat
     {
         [SerializeField] private Weapon currentWeapon;
 
-        private Animator _animator;
+        [SerializeField] private Animator animator;
         
         private static readonly int DoAttackHash = Animator.StringToHash("doAttack");
 
-        private void Start()
-        {
-            _animator = GetComponent<Animator>();
-        }
+        // private void Start()
+        // {
+        //     _animator = GetComponent<Animator>();
+        // }
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && !currentWeapon.IsAttacking)
+            if (Input.GetMouseButtonDown(0) && currentWeapon.isReady)
             {
                 DoAttack();
             }
@@ -27,7 +27,7 @@ namespace Combat
 
         private void DoAttack()
         {
-            _animator.SetTrigger(DoAttackHash);
+            animator.SetTrigger(DoAttackHash);
         }
 
         public void SetWeaponIsAttacking()
@@ -42,6 +42,13 @@ namespace Combat
             if (currentWeapon)
             {
                 currentWeapon.IsAttacking = false;
+            }
+        }
+        public void SetWeaponIsReady()
+        {
+            if (currentWeapon)
+            {
+                currentWeapon.isReady = true;
             }
         }
     }
