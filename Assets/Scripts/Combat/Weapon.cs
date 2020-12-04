@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gameplay;
+using Gameplay.HypeMeter;
 using UnityEngine;
 
 namespace Combat
@@ -17,6 +19,8 @@ namespace Combat
 
             public override int GetHashCode() => Damageable.GetHashCode();
         }
+
+        private HypeMeter _hypeMeter;
         
         [SerializeField] private SphereCollider sphereCollider;
         [SerializeField] private LayerMask layerMask;
@@ -52,7 +56,12 @@ namespace Combat
                 }
             }
         }
-        
+
+        private void Start()
+        {
+            _hypeMeter = HypeMeter.Instance;
+        }
+
         private void EvaluateAttack(DamageHitInfo hitInfo)
         {
             var distancePercent = hitInfo.Distance / hitInfo.Width;
@@ -62,7 +71,11 @@ namespace Combat
             {
                 var damageFactor =  hitSlop - distancePercent;
                 var wasCritical = damageFactor >= hitInfo.Damageable.CritHitDistance;
-                hitInfo.Damageable.TakeDamage(damage * (wasCritical ? 2f : damageFactor), wasCritical);   
+                var relevantDamageFactor = wasCritical ? 2f : damageFactor;
+                
+                hitInfo.Damageable.TakeDamage(damage * relevantDamageFactor, wasCritical);
+                
+                _hypeMeter.AddRelativeHype(relevantDamageFactor);
             }
         }
 

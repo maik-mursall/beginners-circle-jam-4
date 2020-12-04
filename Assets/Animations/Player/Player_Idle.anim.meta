@@ -1,13 +1,9 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 802d832b72e12ba4d9b4db07de495e12
-=======
-<<<<<<< HEAD:Assets/Animations/BodyMask.mask.meta
-guid: dfe240eba04598f448f4d2e849465399
+<<<<<<< HEAD:Assets/Animations/LegsMask.mask.meta
+guid: 06828b44cbc44be42953cee75e538862
 =======
 guid: 802d832b72e12ba4d9b4db07de495e12
->>>>>>> 8af25ac2e9c0999c09c53d502e9b4bf8c1c53fa7:Assets/Animations/Player/Player_Idle.anim.meta
->>>>>>> 8af25ac2e9c0999c09c53d502e9b4bf8c1c53fa7
+>>>>>>> 94004ff2b6a6eefd3b51087c889ee85eff412e5c:Assets/Animations/Player/Player_Idle.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

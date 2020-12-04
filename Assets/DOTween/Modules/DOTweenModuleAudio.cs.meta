@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts/Utils/FollowTransform.cs.meta
+guid: 1ca2a14ac79074140a6d08350594930d
+=======
+guid: 5d95dc5f373705a41a02fec20cbf1878
+>>>>>>> 94004ff2b6a6eefd3b51087c889ee85eff412e5c:Assets/DOTween/Modules/DOTweenModuleAudio.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
