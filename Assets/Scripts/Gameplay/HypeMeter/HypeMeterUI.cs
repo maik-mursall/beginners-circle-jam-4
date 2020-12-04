@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Gameplay.HypeMeter
 {
@@ -11,12 +13,14 @@ namespace Gameplay.HypeMeter
         void Start()
         {
             _hypeMeter = HypeMeter.Instance;
+            _hypeMeter.HypeChanged += OnHypeChanged;
+            
             slider.value = _hypeMeter.HypePercent;
         }
-
-        void Update()
+        
+        private void OnHypeChanged(object src, EventArgs args)
         {
-            slider.value = _hypeMeter.HypePercent;
+            slider.DOValue(_hypeMeter.HypePercent, 1f);
         }
     }
 }

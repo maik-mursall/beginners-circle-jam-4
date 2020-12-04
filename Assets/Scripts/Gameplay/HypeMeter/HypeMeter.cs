@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay.HypeMeter
 {
@@ -12,6 +13,8 @@ namespace Gameplay.HypeMeter
         private float _currentHypePercent = 50f;
 
         public float HypePercent => _currentHypePercent / maxHype;
+        
+        public event EventHandler HypeChanged;
 
         private void Awake()
         {
@@ -22,7 +25,7 @@ namespace Gameplay.HypeMeter
 
         private void Update()
         {
-            _currentHypePercent -= hypeDegradationPerSecond * Time.deltaTime;
+            SetCurrentHypePercent(_currentHypePercent - hypeDegradationPerSecond * Time.deltaTime);
 
             if (_currentHypePercent <= 0f)
             {
@@ -32,7 +35,14 @@ namespace Gameplay.HypeMeter
 
         public void AddRelativeHype(float factor)
         {
-            _currentHypePercent += maxHypeGain * factor;
+            SetCurrentHypePercent(_currentHypePercent + maxHypeGain * factor);
+        }
+
+        private void SetCurrentHypePercent(float value)
+        {
+            _currentHypePercent = value;
+            
+            HypeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
