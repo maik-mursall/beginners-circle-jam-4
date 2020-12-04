@@ -10,15 +10,11 @@ namespace Combat
         [SerializeField] private Slider ghostSlider;
         [SerializeField] private Damageable damageable;
 
-        private float _ghostPercentage = 0f;
-
         private void Start()
         {
             damageable.Damaged += (src, args) => OnDamage(src, (DamageEventArgs)args);
             slider.value = damageable.GetHealthPercentage;
-
-            _ghostPercentage = slider.value;
-            ghostSlider.value = _ghostPercentage;
+            ghostSlider.value = slider.value;
         }
 
         private void OnDamage(object src, DamageEventArgs args)
