@@ -6,12 +6,11 @@ using Random = UnityEngine.Random;
 
 namespace Gameplay
 {
-    public class EnemySpawner : MonoBehaviour
+    public class SpawnManager : MonoBehaviour
     {
-        public static EnemySpawner Instance;
-        
-        [SerializeField] private GameObject enemyPrefab;
-        [SerializeField] private Transform[] enemySpawns;
+        public static SpawnManager Instance;
+
+        [SerializeField] private LevelDetailsScriptableObject levelDetailsScriptableObject;
         [SerializeField] private Transform enemiesParent;
 
         private int _currentAmount;
@@ -28,21 +27,21 @@ namespace Gameplay
         {
             if (--_enemiesAlive <= 0)
             {
-                SpawnEnemies(_currentAmount + 1);   
+                SpawnWave();
             }
         }
 
-        public void SpawnEnemies(int amount)
+        public void SpawnWave()
         {
-            _currentAmount = amount;
-            _enemiesAlive = amount;
+            _currentAmount = levelDetailsScriptableObject.enemiesToSpawn;
+            _enemiesAlive = levelDetailsScriptableObject.enemiesToSpawn;
 
             var currentPlayerObject = GameManager.Instance.GetCurrentPlayerGameObject;
 
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i < levelDetailsScriptableObject.enemiesToSpawn; i++)
             {
-                var relevantSpawn = enemySpawns[Random.Range(0, enemySpawns.Length)];
-                var enemyInstance = Instantiate(enemyPrefab, relevantSpawn.position, relevantSpawn.rotation, enemiesParent);
+                var relevantSpawn = levelDetailsScriptableObject.enemySpawns[Random.Range(0, levelDetailsScriptableObject.enemySpawns.Length)];
+                var enemyInstance = Instantiate(levelDetailsScriptableObject.enemyPrefab, relevantSpawn, Quaternion.identity, enemiesParent);
 
                 enemyInstance.GetComponent<Damageable>().Died += OnEnemyKilled;
                 enemyInstance.GetComponent<EnemyMovement>().SetTarget(currentPlayerObject.transform);

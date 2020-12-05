@@ -27,7 +27,7 @@ namespace Gameplay
 
         private void Start()
         {
-            EnemySpawner.Instance.SpawnEnemies(1);
+            SpawnManager.Instance.SpawnWave();
         }
 
         public void GameOver()

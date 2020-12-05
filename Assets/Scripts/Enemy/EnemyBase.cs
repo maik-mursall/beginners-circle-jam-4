@@ -21,6 +21,7 @@ namespace Enemy
         {
             Destroy(gameObject);
         }
+
         private void OnDamage(object src, EventArgs args)
         {
             var damageEventArgs = (DamageEventArgs) args;
