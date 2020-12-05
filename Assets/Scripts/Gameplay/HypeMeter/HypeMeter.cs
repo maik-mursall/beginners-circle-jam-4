@@ -16,6 +16,8 @@ namespace Gameplay.HypeMeter
         
         public event EventHandler HypeChanged;
 
+        private GameManager _gameManager;
+
         private void Awake()
         {
             if (Instance) DestroyImmediate(this);
@@ -23,13 +25,20 @@ namespace Gameplay.HypeMeter
             Instance = this;
         }
 
+        private void Start()
+        {
+            _gameManager = GameManager.Instance;
+        }
+
         private void Update()
         {
+            if (!_gameManager.IsGameRunning) return;
+
             SetCurrentHypePercent(_currentHypePercent - hypeDegradationPerSecond * Time.deltaTime);
 
             if (_currentHypePercent <= 0f)
             {
-                GameManager.Instance.GameOver();
+                _gameManager.GameOver();
             }
         }
 

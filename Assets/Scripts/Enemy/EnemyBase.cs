@@ -1,6 +1,5 @@
 ﻿using System;
 using Combat;
-using Gameplay;
 using UnityEngine;
 
 namespace Enemy

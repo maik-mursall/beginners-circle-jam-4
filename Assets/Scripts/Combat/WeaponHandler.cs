@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Gameplay;
 using UnityEngine;
 
 namespace Combat
@@ -12,14 +12,13 @@ namespace Combat
         
         private static readonly int DoAttackHash = Animator.StringToHash("doAttack");
 
-        // private void Start()
-        // {
-        //     _animator = GetComponent<Animator>();
-        // }
+        private bool _playerCanMove = true;
+
+        public bool PlayerCanMove => _playerCanMove;
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && currentWeapon.isReady)
+            if (GameManager.Instance.IsGameRunning && Input.GetMouseButtonDown(0) && currentWeapon.isReady)
             {
                 DoAttack();
             }
@@ -30,13 +29,17 @@ namespace Combat
             animator.SetTrigger(DoAttackHash);
         }
 
+        public void SetPlayerCanMove() => _playerCanMove = true;
+
         public void SetWeaponIsAttacking()
         {
             if (currentWeapon)
             {
                 currentWeapon.IsAttacking = true;
+                _playerCanMove = false;
             }
         }
+
         public void ClearWeaponIsAttacking()
         {
             if (currentWeapon)
@@ -44,6 +47,7 @@ namespace Combat
                 currentWeapon.IsAttacking = false;
             }
         }
+
         public void SetWeaponIsReady()
         {
             if (currentWeapon)

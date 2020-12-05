@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Combat;
+using UnityEngine;
 
 namespace Player
 {
@@ -6,15 +7,17 @@ namespace Player
     {
         private Camera _mainCamera;
 
+        [SerializeField] private WeaponHandler weaponHandler;
+
         private void Start()
         {
             _mainCamera = Camera.main;
-        
-        
         }
 
         void Update()
         {
+            if (!weaponHandler.PlayerCanMove) return;
+
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         
             Plane plane = new Plane(Vector3.up, Vector3.up * transform.position.y);
