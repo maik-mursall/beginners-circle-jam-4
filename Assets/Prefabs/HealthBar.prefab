@@ -259,6 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5348394651297391019}
   - component: {fileID: 5348394651297391016}
+  - component: {fileID: 8147037822866318680}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -296,6 +297,18 @@ MonoBehaviour:
   slider: {fileID: 5348394650948815966}
   ghostSlider: {fileID: 7817680198683336773}
   damageable: {fileID: 0}
+--- !u!114 &8147037822866318680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5348394651297391018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3adf85d8623011344ad1f0fc76e2fa92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5348394651398221161
 GameObject:
   m_ObjectHideFlags: 0
