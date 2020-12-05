@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Gameplay;
+﻿using System.Collections.Generic;
 using Gameplay.HypeMeter;
 using UnityEngine;
 
