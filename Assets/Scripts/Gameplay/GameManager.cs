@@ -7,6 +7,9 @@ namespace Gameplay
     {
         public static GameManager Instance;
 
+        [SerializeField] private GameObject currentPlayerGameObject;
+        public GameObject GetCurrentPlayerGameObject => currentPlayerGameObject;
+
         private bool _gameOver = false;
         private bool _gameRunning = true;
 
@@ -20,6 +23,11 @@ namespace Gameplay
             if (Instance) DestroyImmediate(gameObject);
 
             Instance = this;
+        }
+
+        private void Start()
+        {
+            EnemySpawner.Instance.SpawnEnemies(1);
         }
 
         public void GameOver()

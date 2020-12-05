@@ -26,5 +26,9 @@ namespace Enemy
                 _navMeshAgent.destination = target.position;
             }
         }
+
+        public void SetTarget(Transform newTarget) => target = newTarget;
+
+        public bool IsMoving => _navMeshAgent.velocity.magnitude > 0f;
     }
 }
