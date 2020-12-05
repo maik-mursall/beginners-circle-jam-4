@@ -13,7 +13,9 @@ namespace Utils
 
         private void LateUpdate()
         {
-            transform.rotation = _cameraTransform.rotation * Quaternion.Euler(0f, 180f, 0f);
+            var cameraRotation = _cameraTransform.rotation;
+            transform.LookAt(transform.position + cameraRotation * Vector3.back,
+                cameraRotation * Vector3.up);
         }
     }
 }
