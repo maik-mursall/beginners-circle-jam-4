@@ -840,7 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHype: 100
-  hypeDegradationPerSecond: 10
+  hypeDegradationPerSecond: 5
   maxHypeGain: 20
 --- !u!1 &1431181166
 GameObject:
