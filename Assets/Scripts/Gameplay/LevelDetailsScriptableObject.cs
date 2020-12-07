@@ -2,11 +2,30 @@
 
 namespace Gameplay
 {
+    [System.Serializable]
+    public struct PosRot
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+    }
+    
+    [System.Serializable]
+    public struct WaveEnemyDescriptor
+    {
+        public GameObject prefab;
+        public int amountToSpawn;
+        public PosRot[] positionsAndRotations;
+    }
+
+    [System.Serializable]
+    public struct Wave
+    {
+        public WaveEnemyDescriptor[] enemiesToSpawn;
+    }
+    
     [CreateAssetMenu(fileName = "LevelDetail", menuName = "ScriptableObjects/LevelDetailsScriptableObject", order = 1)]
     public class LevelDetailsScriptableObject : ScriptableObject
     {
-        public GameObject enemyPrefab;
-        public Vector3[] enemySpawns;
-        public int enemiesToSpawn;
+        public Wave[] waves;
     }
 }

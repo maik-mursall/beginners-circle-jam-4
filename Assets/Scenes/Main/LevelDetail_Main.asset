@@ -12,7 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b133dda36f649f3439bbb26a1b05f034, type: 3}
   m_Name: LevelDetail_Main
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8159667068570671723, guid: a403b718aa8e88f47a96be1999f6054a, type: 3}
-  enemySpawns:
-  - {x: -40, y: 0, z: 0}
-  enemiesToSpawn: 5
+  waves:
+  - enemiesToSpawn:
+    - prefab: {fileID: 8159667068570671723, guid: a403b718aa8e88f47a96be1999f6054a, type: 3}
+      amountToSpawn: 4
+      positionsAndRotations:
+      - position: {x: 0, y: 0, z: 34}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+      - position: {x: 0, y: 0, z: -34}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+      - position: {x: 34, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+      - position: {x: -34, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+    - prefab: {fileID: 1297115653656636237, guid: c1a0d215d8306eb4e9a867c13d5c9167, type: 3}
+      amountToSpawn: 2
+      positionsAndRotations:
+      - position: {x: 0, y: 0, z: 36}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+      - position: {x: 0, y: 0, z: -36}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+  - enemiesToSpawn:
+    - prefab: {fileID: 8159667068570671723, guid: a403b718aa8e88f47a96be1999f6054a, type: 3}
+      amountToSpawn: 1
+      positionsAndRotations:
+      - position: {x: 0, y: 0, z: 34}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+    - prefab: {fileID: 1297115653656636237, guid: c1a0d215d8306eb4e9a867c13d5c9167, type: 3}
+      amountToSpawn: 3
+      positionsAndRotations:
+      - position: {x: 0, y: 0, z: 36}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+      - position: {x: 0, y: 0, z: -36}
+        rotation: {x: 0, y: 0, z: 0, w: 0}

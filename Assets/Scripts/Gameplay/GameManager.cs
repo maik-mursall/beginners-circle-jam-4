@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Gameplay
@@ -27,7 +28,14 @@ namespace Gameplay
 
         private void Start()
         {
-            SpawnManager.Instance.SpawnWave();
+            var spawnManager = SpawnManager.Instance;
+
+            spawnManager.WaveComplete += (sender, evt) =>
+                Debug.Log($"Wave {((WaveClearedEvent) evt).ClearedWave} Completed!");
+
+            spawnManager.AllWavesComplete += (sender, evt) => Debug.Log("All waves completed!");
+            
+            spawnManager.SpawnWave();
         }
 
         public void GameOver()
