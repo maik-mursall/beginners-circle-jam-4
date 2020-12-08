@@ -1759,6 +1759,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6510095074534585816, guid: 38b35d1cd33b4e148862326095fe1373, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6510095074534585816, guid: 38b35d1cd33b4e148862326095fe1373, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6510095074534585816, guid: 38b35d1cd33b4e148862326095fe1373, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 6609979392287659954, guid: 38b35d1cd33b4e148862326095fe1373, type: 3}
       propertyPath: m_Name
       value: Player
