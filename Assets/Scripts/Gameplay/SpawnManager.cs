@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Combat;
 using Enemy;
@@ -16,10 +17,14 @@ namespace Gameplay
         public static SpawnManager Instance;
 
         [SerializeField] private LevelDetailsScriptableObject levelDetailsScriptableObject;
+        [SerializeField] private Transform enemiesInitialSpawn;
         [SerializeField] private Transform enemiesParent;
 
         private int _enemiesAlive;
+        private int _enemiesRemainingToGoIntoPosition;
         private int _currentWave;
+        
+        private List<EnemyMovement> _enemyMovementInstances = new List<EnemyMovement>();
         
         public event EventHandler WaveComplete;
         public event EventHandler AllWavesComplete;
@@ -52,13 +57,27 @@ namespace Gameplay
             }
         }
 
+        private void StartBattle()
+        {
+            var currentPlayerTransform = GameManager.Instance.GetCurrentPlayerGameObject.transform;
+            _enemyMovementInstances.ForEach((movement => movement.SetTarget(currentPlayerTransform)));
+        }
+
+        private void OnEnemyReachedStartPosition(object sender, EventArgs args)
+        {
+            if (--_enemiesRemainingToGoIntoPosition <= 0)
+            {
+                StartBattle();
+            }
+        }
+
         public void SpawnWave()
         {
+            _enemyMovementInstances.Clear();
             var wave = levelDetailsScriptableObject.waves[_currentWave++];
             _enemiesAlive = wave.enemiesToSpawn.Select(enemies => enemies.amountToSpawn).Sum();
-
-            var currentPlayerObject = GameManager.Instance.GetCurrentPlayerGameObject;
-
+            _enemiesRemainingToGoIntoPosition = _enemiesAlive;
+            
             foreach (var waveEnemyDescriptor in wave.enemiesToSpawn)
             {
                 for (int i = 0; i < waveEnemyDescriptor.amountToSpawn; i++)
@@ -66,9 +85,14 @@ namespace Gameplay
                     var relevantSpawn =
                         waveEnemyDescriptor.positionsAndRotations[i % waveEnemyDescriptor.positionsAndRotations.Length];
 
-                    var enemyInstance = Instantiate(waveEnemyDescriptor.prefab, relevantSpawn.position, relevantSpawn.rotation, enemiesParent);
+                    var enemyInstance = Instantiate(waveEnemyDescriptor.prefab, enemiesInitialSpawn.position, enemiesInitialSpawn.rotation, enemiesParent);
+
                     enemyInstance.GetComponent<Damageable>().Died += OnEnemyKilled;
-                    enemyInstance.GetComponent<EnemyMovement>().SetTarget(currentPlayerObject.transform);
+                    
+                    var enemyMovement = enemyInstance.GetComponent<EnemyMovement>();
+                    _enemyMovementInstances.Add(enemyMovement);
+                    enemyMovement.TargetReached += OnEnemyReachedStartPosition;
+                    enemyMovement.SetStartingPosition(relevantSpawn.position);
                 }
             }
         }
