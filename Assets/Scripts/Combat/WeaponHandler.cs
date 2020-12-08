@@ -18,7 +18,7 @@ namespace Combat
 
         private void Update()
         {
-            if (GameManager.Instance.IsGameRunning && Input.GetMouseButtonDown(0) && currentWeapon.isReady)
+            if ((GameManager.Instance.IsGameRunning && !SpawnManager.Instance.WaveIsPreparing) && Input.GetMouseButtonDown(0) && currentWeapon.isReady)
             {
                 DoAttack();
             }

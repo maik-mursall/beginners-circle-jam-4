@@ -25,7 +25,10 @@ namespace Gameplay
         private int _currentWave;
         
         private List<EnemyMovement> _enemyMovementInstances = new List<EnemyMovement>();
-        
+
+        private bool _waveIsPreparing;
+        public bool WaveIsPreparing => _waveIsPreparing;
+
         public event EventHandler WaveComplete;
         public event EventHandler AllWavesComplete;
 
@@ -59,6 +62,7 @@ namespace Gameplay
 
         private void StartBattle()
         {
+            _waveIsPreparing = false;
             var currentPlayerTransform = GameManager.Instance.GetCurrentPlayerGameObject.transform;
             _enemyMovementInstances.ForEach((movement => movement.SetTarget(currentPlayerTransform)));
         }
@@ -73,6 +77,7 @@ namespace Gameplay
 
         public void SpawnWave()
         {
+            _waveIsPreparing = true;
             _enemyMovementInstances.Clear();
             var wave = levelDetailsScriptableObject.waves[_currentWave++];
             _enemiesAlive = wave.enemiesToSpawn.Select(enemies => enemies.amountToSpawn).Sum();
