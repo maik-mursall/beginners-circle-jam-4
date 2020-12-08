@@ -15,6 +15,42 @@ ModelImporter:
   - first:
       74: 4831380224863134114
     second: ArmatureRobot|Idle
+  - first:
+      74: -4755760937673424
+    second: Cylinder.025|ArmatureRobotAction
+  - first:
+      74: -1605489735168609184
+    second: Cylinder.025|Atack
+  - first:
+      74: -7401018895387516364
+    second: Cylinder.028|ArmatureRobotAction
+  - first:
+      74: 844497637964868710
+    second: Cylinder.028|Idle
+  - first:
+      74: -421889097853222703
+    second: Weight|ArmatureRobotAction
+  - first:
+      74: -7486231522216413911
+    second: Weight|Atack
+  - first:
+      74: -649301455676621936
+    second: WheelParent|ArmatureRobotAction
+  - first:
+      74: -34762185706616365
+    second: WheelParent|Idle
+  - first:
+      74: 3740148826611567366
+    second: ArmatureRobot|RammyRollyBoy
+  - first:
+      74: 4305257429914873388
+    second: ArmatureRobot|SpinnyBoyAtack
+  - first:
+      74: 8775905428913763476
+    second: Cylinder.039|ArmatureRobotAction
+  - first:
+      74: -8753974801866064084
+    second: Cylinder.039|SpinnyBoyAtack
   externalObjects: {}
   materials:
     materialImportMode: 2
