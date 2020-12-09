@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace Combat.Weapons
 {
+    public class CooldownUpdateEventArgs : EventArgs
+    {
+        public float TimeLeftPercent;
+    }
+    
     public class WeaponBase : MonoBehaviour
     {
         private struct DamageHitInfo
@@ -64,10 +69,12 @@ namespace Combat.Weapons
         [SerializeField] private float cooldown = 5f;
         private float _currentCooldown;
 
-        public float GetCurrentCooldownPercent() => 1 - (_currentCooldown / cooldown);
-
         private bool _cooldownActive;
         public bool OnCooldown { get; private set; }
+        
+        public event EventHandler CooldownStarted;
+        public event EventHandler CooldownUpdate;
+        public event EventHandler CooldownFinished;
 
         private void Awake()
         {
@@ -140,15 +147,22 @@ namespace Combat.Weapons
             _currentCooldown = cooldown;
             _cooldownActive = false;
             OnCooldown = true;
+            
+            CooldownStarted?.Invoke(this, EventArgs.Empty);
 
             while(_currentCooldown > 0f)
             {
                 yield return new WaitForEndOfFrame();
-                
-                _currentCooldown -= _cooldownActive ? Time.deltaTime : 0f;
+
+                if (_cooldownActive)
+                {
+                    _currentCooldown -= Time.deltaTime;
+                    CooldownUpdate?.Invoke(this, new CooldownUpdateEventArgs{ TimeLeftPercent = (1 - (_currentCooldown / cooldown)) });
+                }
             }
             
             OnCooldown = false;
+            CooldownFinished?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnTriggerEnter(Collider other)

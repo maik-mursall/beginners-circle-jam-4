@@ -12,15 +12,29 @@ namespace Combat.Weapons
         [SerializeField] private TMP_Text text;
         [SerializeField] private Image image;
 
-        private void Awake()
+        private void Start()
         {
             image.fillAmount = 1f;
             text.text = description;
+
+            weapon.CooldownStarted += OnCooldownStarted;
+            weapon.CooldownFinished += OnCooldownFinished;
+            weapon.CooldownUpdate += (sender, args) => OnCooldownUpdated(sender, (CooldownUpdateEventArgs)args);
+        }
+        
+        private void OnCooldownStarted(object src, EventArgs args)
+        {
+            image.fillAmount = 0f;
         }
 
-        private void LateUpdate()
+        private void OnCooldownFinished(object src, EventArgs args)
         {
-            image.fillAmount = weapon.OnCooldown ? weapon.GetCurrentCooldownPercent() : 1f;
+            image.fillAmount = 1f;
+        }
+        
+        private void OnCooldownUpdated(object src, CooldownUpdateEventArgs args)
+        {
+            image.fillAmount = args.TimeLeftPercent;
         }
     }
 }
