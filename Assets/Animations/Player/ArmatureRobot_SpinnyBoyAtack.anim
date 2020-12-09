@@ -9986,15 +9986,8 @@ AnimationClip:
     floatParameter: 0
     intParameter: 2
     messageOptions: 0
-  - time: 2.4166667
-    functionName: ClearWeaponIsAttacking
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 2
-    messageOptions: 0
   - time: 2.8333333
-    functionName: SetWeaponIsReady
+    functionName: ClearWeaponIsAttacking
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

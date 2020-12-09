@@ -34,8 +34,6 @@ namespace Combat.Weapons
 
         private readonly HashSet<DamageHitInfo> _hitList = new HashSet<DamageHitInfo>();
 
-        public bool isReady = true;
-
         protected bool IsAttacking;
         public bool GetIsAttacking
         {
@@ -63,6 +61,15 @@ namespace Combat.Weapons
         protected bool PlayerCanTurn = true;
         public bool GetPlayerCanTurn => PlayerCanTurn;
 
+        [SerializeField] private float cooldown = 5f;
+        private float _currentCooldown;
+
+        public float GetCurrentCooldownPercent() => 1 - (_currentCooldown / cooldown);
+
+        private bool _cooldownActive;
+        private bool _onCooldown;
+        public bool OnCooldown => _onCooldown;
+
         private void Awake()
         {
             _animatorAttackHash = Animator.StringToHash(animatorAttackString);
@@ -71,6 +78,11 @@ namespace Combat.Weapons
         private void Start()
         {
             _hypeMeter = HypeMeter.Instance;
+        }
+
+        private void Update()
+        {
+            HandleCooldown();
         }
 
         private void EvaluateAttack(DamageHitInfo hitInfo)
@@ -114,7 +126,7 @@ namespace Combat.Weapons
 
         protected virtual void HandleSetAttack()
         {
-            isReady = false;
+            StartCooldown();
         }
 
         protected virtual void HandleClearAttack()
@@ -125,6 +137,33 @@ namespace Combat.Weapons
             }
 
             _hitList.Clear();
+
+            _cooldownActive = true;
+        }
+
+        private void HandleCooldown()
+        {
+            if (_cooldownActive)
+            {
+                _currentCooldown -= Time.deltaTime;
+
+                if (_currentCooldown <= 0f)
+                {
+                    EndCooldown();
+                }
+            }
+        }
+
+        private void StartCooldown()
+        {
+            _currentCooldown = cooldown;
+            _cooldownActive = false;
+            _onCooldown = true;
+        }
+        
+        private void EndCooldown()
+        {
+            _onCooldown = false;
         }
 
         private void OnTriggerEnter(Collider other)

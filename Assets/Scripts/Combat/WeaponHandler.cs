@@ -18,11 +18,11 @@ namespace Combat
         private void Update()
         {
             if (!GameManager.Instance.IsGameRunning || SpawnManager.Instance.WaveIsPreparing) return;
-            if (weapons.Any(weapon => !weapon.isReady)) return;
+            if (weapons.Any(weapon => weapon.GetIsAttacking)) return;
 
             foreach (var weapon in weapons)
             {
-                if (Input.GetKeyDown(weapon.AttackKeyCode))
+                if (Input.GetKeyDown(weapon.AttackKeyCode) && !weapon.OnCooldown)
                 {
                     DoAttack(weapon.AnimatorAttackHash);
                 }
@@ -47,14 +47,6 @@ namespace Combat
             if (weapons.ElementAtOrDefault(animationEvent.intParameter) is var weapon && weapon != null)
             {
                 weapon.GetIsAttacking = false;
-            }
-        }
-
-        public void SetWeaponIsReady(AnimationEvent animationEvent)
-        {
-            if (weapons.ElementAtOrDefault(animationEvent.intParameter) is var weapon && weapon != null)
-            {
-                weapon.isReady = true;
             }
         }
     }
