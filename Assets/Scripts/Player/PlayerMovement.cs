@@ -12,13 +12,13 @@ namespace Player
         [SerializeField] private WeaponHandler weaponHandler;
 
         private Vector2 _playerInput = Vector2.zero;
-        private Vector3 _startingPosition;
+        // private Vector3 _startingPosition;
 
         [SerializeField] private float moveSpeed = 10f;
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
-            _startingPosition = transform.position;
+            // _startingPosition = transform.position;
         }
 
         private void Update()
@@ -33,7 +33,9 @@ namespace Player
         {
             if (!GameManager.Instance.IsGameRunning) return;
 
-            var normalizedPlayerInput = (SpawnManager.Instance.WaveIsPreparing ? (_startingPosition - transform.position) : (Vector3)_playerInput).normalized;
+            // Maybe not?
+            // var normalizedPlayerInput = (SpawnManager.Instance.WaveIsPreparing ? (_startingPosition - transform.position) : (Vector3)_playerInput).normalized;
+            var normalizedPlayerInput = _playerInput.normalized;
             _characterController.Move(new Vector3(normalizedPlayerInput.x, 0f, normalizedPlayerInput.y) * (moveSpeed * Time.fixedDeltaTime));
         }
     }
