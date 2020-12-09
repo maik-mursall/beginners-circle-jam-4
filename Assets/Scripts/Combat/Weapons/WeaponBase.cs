@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gameplay.HypeMeter;
 using UnityEngine;
 
-namespace Combat
+namespace Combat.Weapons
 {
-    public class Weapon : MonoBehaviour
+    public class WeaponBase : MonoBehaviour
     {
         private struct DamageHitInfo
         {
@@ -21,38 +22,50 @@ namespace Combat
         private HypeMeter _hypeMeter;
         
         [SerializeField] private SphereCollider sphereCollider;
-        [SerializeField] private LayerMask layerMask;
         
         [SerializeField] private float damage = 10f;
-        
+
+        [SerializeField] private KeyCode attackKeyCode;
+        public KeyCode AttackKeyCode => attackKeyCode;
+
+        [SerializeField] private String animatorAttackString;
+        private int _animatorAttackHash;
+        public int AnimatorAttackHash => _animatorAttackHash;
+
         private readonly HashSet<DamageHitInfo> _hitList = new HashSet<DamageHitInfo>();
 
         public bool isReady = true;
 
-        private bool _isAttacking;
-        public bool IsAttacking
+        protected bool IsAttacking;
+        public bool GetIsAttacking
         {
-            get => _isAttacking;
+            get => IsAttacking;
             set
             {
-                _isAttacking = value;
+                IsAttacking = value;
 
                 sphereCollider.enabled = value;
 
                 if (!value)
                 {
-                    foreach (var damageHitInfo in _hitList)
-                    {
-                        EvaluateAttack(damageHitInfo);
-                    }
-
-                    _hitList.Clear();
+                    HandleClearAttack();
                 }
                 else
                 {
-                    isReady = false;
+                    HandleSetAttack();
                 }
             }
+        }
+
+        protected bool PlayerCanMove = true;
+        public bool GetPlayerCanMove => PlayerCanMove;
+
+        protected bool PlayerCanTurn = true;
+        public bool GetPlayerCanTurn => PlayerCanTurn;
+
+        private void Awake()
+        {
+            _animatorAttackHash = Animator.StringToHash(animatorAttackString);
         }
 
         private void Start()
@@ -97,6 +110,21 @@ namespace Combat
             };
             
             return Vector3.Distance(flattenedTargetPosition, flattenedColliderPosition);
+        }
+
+        protected virtual void HandleSetAttack()
+        {
+            isReady = false;
+        }
+
+        protected virtual void HandleClearAttack()
+        {
+            foreach (var damageHitInfo in _hitList)
+            {
+                EvaluateAttack(damageHitInfo);
+            }
+
+            _hitList.Clear();
         }
 
         private void OnTriggerEnter(Collider other)

@@ -1,4 +1,6 @@
-﻿using Gameplay;
+﻿using System.Linq;
+using Combat.Weapons;
+using Gameplay;
 using UnityEngine;
 
 namespace Combat
@@ -6,53 +8,53 @@ namespace Combat
     [RequireComponent(typeof(Animator))]
     public class WeaponHandler : MonoBehaviour
     {
-        [SerializeField] private Weapon currentWeapon;
+        [SerializeField] private WeaponBase[] weapons;
 
         [SerializeField] private Animator animator;
         
-        private static readonly int DoAttackHash = Animator.StringToHash("doAttack");
-
-        private bool _playerCanMove = true;
-
-        public bool PlayerCanMove => _playerCanMove;
+        public bool PlayerCanMove => weapons.All(weapon => weapon.GetPlayerCanMove);
+        public bool PlayerCanTurn => weapons.All(weapon => weapon.GetPlayerCanTurn);
 
         private void Update()
         {
-            if ((GameManager.Instance.IsGameRunning && !SpawnManager.Instance.WaveIsPreparing) && Input.GetMouseButtonDown(0) && currentWeapon.isReady)
+            if (!GameManager.Instance.IsGameRunning || SpawnManager.Instance.WaveIsPreparing) return;
+            if (weapons.Any(weapon => !weapon.isReady)) return;
+
+            foreach (var weapon in weapons)
             {
-                DoAttack();
+                if (Input.GetKeyDown(weapon.AttackKeyCode))
+                {
+                    DoAttack(weapon.AnimatorAttackHash);
+                }
             }
         }
 
-        private void DoAttack()
+        private void DoAttack(int animationHash)
         {
-            animator.SetTrigger(DoAttackHash);
+            animator.SetTrigger(animationHash);
         }
 
-        public void SetPlayerCanMove() => _playerCanMove = true;
-
-        public void SetWeaponIsAttacking()
+        public void SetWeaponIsAttacking(AnimationEvent animationEvent)
         {
-            if (currentWeapon)
+            if (weapons.ElementAtOrDefault(animationEvent.intParameter) is var weapon && weapon != null)
             {
-                currentWeapon.IsAttacking = true;
-                _playerCanMove = false;
+                weapon.GetIsAttacking = true;
             }
         }
 
-        public void ClearWeaponIsAttacking()
+        public void ClearWeaponIsAttacking(AnimationEvent animationEvent)
         {
-            if (currentWeapon)
+            if (weapons.ElementAtOrDefault(animationEvent.intParameter) is var weapon && weapon != null)
             {
-                currentWeapon.IsAttacking = false;
+                weapon.GetIsAttacking = false;
             }
         }
 
-        public void SetWeaponIsReady()
+        public void SetWeaponIsReady(AnimationEvent animationEvent)
         {
-            if (currentWeapon)
+            if (weapons.ElementAtOrDefault(animationEvent.intParameter) is var weapon && weapon != null)
             {
-                currentWeapon.isReady = true;
+                weapon.isReady = true;
             }
         }
     }

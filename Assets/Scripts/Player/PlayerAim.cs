@@ -16,7 +16,7 @@ namespace Player
 
         void Update()
         {
-            if (!weaponHandler.PlayerCanMove) return;
+            if (!weaponHandler.PlayerCanTurn) return;
 
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         
