@@ -655,7 +655,7 @@ PrefabInstance:
       objectReference: {fileID: 6609979391844822891}
     - target: {fileID: 4223531474467818168, guid: 427e42070d606a34387cfec1aa5c35fe, type: 3}
       propertyPath: description
-      value: Spin
+      value: Spin E
       objectReference: {fileID: 0}
     - target: {fileID: 4223531474467818169, guid: 427e42070d606a34387cfec1aa5c35fe, type: 3}
       propertyPath: m_Pivot.x
@@ -770,7 +770,7 @@ PrefabInstance:
       objectReference: {fileID: 6609979391844822892}
     - target: {fileID: 4223531474467818168, guid: 427e42070d606a34387cfec1aa5c35fe, type: 3}
       propertyPath: description
-      value: Ram
+      value: Ram LSHIFT
       objectReference: {fileID: 0}
     - target: {fileID: 4223531474467818169, guid: 427e42070d606a34387cfec1aa5c35fe, type: 3}
       propertyPath: m_Pivot.x
@@ -2004,7 +2004,7 @@ PrefabInstance:
       objectReference: {fileID: 6609979391844822890}
     - target: {fileID: 4223531474467818168, guid: 427e42070d606a34387cfec1aa5c35fe, type: 3}
       propertyPath: description
-      value: Hammer
+      value: Hammer LMB
       objectReference: {fileID: 0}
     - target: {fileID: 4223531474467818169, guid: 427e42070d606a34387cfec1aa5c35fe, type: 3}
       propertyPath: m_Pivot.x
