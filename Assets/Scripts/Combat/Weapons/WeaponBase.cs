@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Gameplay.HypeMeter;
 using UnityEngine;
@@ -80,11 +81,6 @@ namespace Combat.Weapons
             _hypeMeter = HypeMeter.Instance;
         }
 
-        private void Update()
-        {
-            HandleCooldown();
-        }
-
         private void EvaluateAttack(DamageHitInfo hitInfo)
         {
             var distancePercent = hitInfo.Distance / hitInfo.Width;
@@ -126,7 +122,7 @@ namespace Combat.Weapons
 
         protected virtual void HandleSetAttack()
         {
-            StartCooldown();
+            StartCoroutine(StartCooldown());
         }
 
         protected virtual void HandleClearAttack()
@@ -141,28 +137,19 @@ namespace Combat.Weapons
             _cooldownActive = true;
         }
 
-        private void HandleCooldown()
-        {
-            if (_cooldownActive)
-            {
-                _currentCooldown -= Time.deltaTime;
-
-                if (_currentCooldown <= 0f)
-                {
-                    EndCooldown();
-                }
-            }
-        }
-
-        private void StartCooldown()
+        private IEnumerator StartCooldown()
         {
             _currentCooldown = cooldown;
             _cooldownActive = false;
             _onCooldown = true;
-        }
-        
-        private void EndCooldown()
-        {
+
+            while(_currentCooldown > 0f)
+            {
+                yield return new WaitForEndOfFrame();
+                
+                _currentCooldown -= _cooldownActive ? Time.deltaTime : 0f;
+            }
+            
             _onCooldown = false;
         }
 
