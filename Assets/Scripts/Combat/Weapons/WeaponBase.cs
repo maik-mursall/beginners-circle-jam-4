@@ -1,10 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Gameplay.HypeMeter;
 using UnityEngine;
 
-namespace Combat
+namespace Combat.Weapons
 {
-    public class Weapon : MonoBehaviour
+    public class CooldownUpdateEventArgs : EventArgs
+    {
+        public float TimeLeftPercent;
+    }
+    
+    public class WeaponBase : MonoBehaviour
     {
         private struct DamageHitInfo
         {
@@ -21,38 +28,57 @@ namespace Combat
         private HypeMeter _hypeMeter;
         
         [SerializeField] private SphereCollider sphereCollider;
-        [SerializeField] private LayerMask layerMask;
         
         [SerializeField] private float damage = 10f;
-        
+
+        [SerializeField] private KeyCode attackKeyCode;
+        public KeyCode AttackKeyCode => attackKeyCode;
+
+        [SerializeField] private string animatorAttackString;
+        public int AnimatorAttackHash { get; private set; }
+
         private readonly HashSet<DamageHitInfo> _hitList = new HashSet<DamageHitInfo>();
 
-        public bool isReady = true;
-
-        private bool _isAttacking;
-        public bool IsAttacking
+        protected bool IsAttacking;
+        public bool GetIsAttacking
         {
-            get => _isAttacking;
+            get => IsAttacking;
             set
             {
-                _isAttacking = value;
+                IsAttacking = value;
 
                 sphereCollider.enabled = value;
 
                 if (!value)
                 {
-                    foreach (var damageHitInfo in _hitList)
-                    {
-                        EvaluateAttack(damageHitInfo);
-                    }
-
-                    _hitList.Clear();
+                    HandleClearAttack();
                 }
                 else
                 {
-                    isReady = false;
+                    HandleSetAttack();
                 }
             }
+        }
+
+        protected bool PlayerCanMove = true;
+        public bool GetPlayerCanMove => PlayerCanMove;
+
+        protected bool PlayerCanTurn = true;
+        public bool GetPlayerCanTurn => PlayerCanTurn;
+
+        [SerializeField] private float cooldown = 5f;
+        private float _currentCooldown;
+
+        private bool _cooldownActive;
+        public bool OnCooldown { get; private set; }
+        
+        public event EventHandler CooldownStarted;
+        public event EventHandler CooldownUpdate;
+        public event EventHandler CooldownFinished;
+
+        private void Awake()
+        {
+            AnimatorAttackHash = Animator.StringToHash(animatorAttackString);
         }
 
         private void Start()
@@ -97,6 +123,46 @@ namespace Combat
             };
             
             return Vector3.Distance(flattenedTargetPosition, flattenedColliderPosition);
+        }
+
+        protected virtual void HandleSetAttack()
+        {
+            StartCoroutine(StartCooldown());
+        }
+
+        protected virtual void HandleClearAttack()
+        {
+            foreach (var damageHitInfo in _hitList)
+            {
+                EvaluateAttack(damageHitInfo);
+            }
+
+            _hitList.Clear();
+
+            _cooldownActive = true;
+        }
+
+        private IEnumerator StartCooldown()
+        {
+            _currentCooldown = cooldown;
+            _cooldownActive = false;
+            OnCooldown = true;
+            
+            CooldownStarted?.Invoke(this, EventArgs.Empty);
+
+            while(_currentCooldown > 0f)
+            {
+                yield return new WaitForEndOfFrame();
+
+                if (_cooldownActive)
+                {
+                    _currentCooldown -= Time.deltaTime;
+                    CooldownUpdate?.Invoke(this, new CooldownUpdateEventArgs{ TimeLeftPercent = (1 - (_currentCooldown / cooldown)) });
+                }
+            }
+            
+            OnCooldown = false;
+            CooldownFinished?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnTriggerEnter(Collider other)

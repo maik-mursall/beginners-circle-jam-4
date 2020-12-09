@@ -49,9 +49,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 2.5711622
-  m_Height: 5.1423244
+  m_Height: 9.720027
   m_Direction: 1
-  m_Center: {x: 0, y: 2.030929, z: -1.0711622}
+  m_Center: {x: 0, y: 4.319781, z: -1.0711622}
 --- !u!114 &8159667068570671716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,7 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  startingPosition: {x: 0, y: 0, z: 0}
   moveSpeed: 5
+  stoppingDistance: 10
 --- !u!114 &2039726439733108059
 MonoBehaviour:
   m_ObjectHideFlags: 0
