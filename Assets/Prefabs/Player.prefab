@@ -271,7 +271,9 @@ MonoBehaviour:
   animatorAttackString: doRam
   isReady: 1
   playerCharacterController: {fileID: 6609979392287659959}
+  playerAim: {fileID: 6609979392287659958}
   ramSpeed: 20
+  ramTurnSpeed: 5
 --- !u!135 &6747590928997082707
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -524,6 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHandler: {fileID: 2067910001306796050}
+  turnSpeed: 12
 --- !u!1 &9219356449935914520
 GameObject:
   m_ObjectHideFlags: 0
