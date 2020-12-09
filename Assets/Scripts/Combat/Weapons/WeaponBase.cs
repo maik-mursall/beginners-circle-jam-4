@@ -29,9 +29,8 @@ namespace Combat.Weapons
         [SerializeField] private KeyCode attackKeyCode;
         public KeyCode AttackKeyCode => attackKeyCode;
 
-        [SerializeField] private String animatorAttackString;
-        private int _animatorAttackHash;
-        public int AnimatorAttackHash => _animatorAttackHash;
+        [SerializeField] private string animatorAttackString;
+        public int AnimatorAttackHash { get; private set; }
 
         private readonly HashSet<DamageHitInfo> _hitList = new HashSet<DamageHitInfo>();
 
@@ -68,12 +67,11 @@ namespace Combat.Weapons
         public float GetCurrentCooldownPercent() => 1 - (_currentCooldown / cooldown);
 
         private bool _cooldownActive;
-        private bool _onCooldown;
-        public bool OnCooldown => _onCooldown;
+        public bool OnCooldown { get; private set; }
 
         private void Awake()
         {
-            _animatorAttackHash = Animator.StringToHash(animatorAttackString);
+            AnimatorAttackHash = Animator.StringToHash(animatorAttackString);
         }
 
         private void Start()
@@ -141,7 +139,7 @@ namespace Combat.Weapons
         {
             _currentCooldown = cooldown;
             _cooldownActive = false;
-            _onCooldown = true;
+            OnCooldown = true;
 
             while(_currentCooldown > 0f)
             {
@@ -150,7 +148,7 @@ namespace Combat.Weapons
                 _currentCooldown -= _cooldownActive ? Time.deltaTime : 0f;
             }
             
-            _onCooldown = false;
+            OnCooldown = false;
         }
 
         private void OnTriggerEnter(Collider other)
