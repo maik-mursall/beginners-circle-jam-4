@@ -49,7 +49,7 @@ namespace Gameplay.HypeMeter
 
         private void SetCurrentHypePercent(float value)
         {
-            _currentHypePercent = value;
+            _currentHypePercent = Mathf.Clamp(value, 0f, maxHype);
             
             HypeChanged?.Invoke(this, EventArgs.Empty);
         }
