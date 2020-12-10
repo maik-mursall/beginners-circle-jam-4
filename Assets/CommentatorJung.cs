@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gameplay;
+using Gameplay.HypeMeter;
 
 public class CommentatorJung : MonoBehaviour
 {
@@ -26,6 +28,8 @@ public class CommentatorJung : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+
+        hypeMeter = HypeMeter.Instance.HypePercent * 10;
     }
 
     [Header("working Vars")]
@@ -56,6 +60,7 @@ public class CommentatorJung : MonoBehaviour
         {
             hypeUpDown = 0;
         }
+
         hypeCombo -= sustainedHypeBleedOff * Time.deltaTime;
 
         hypeCombo = Mathf.Clamp(hypeCombo, 0, hypeMeterRange[1]);
@@ -63,7 +68,7 @@ public class CommentatorJung : MonoBehaviour
         float hRange = hypeMeterRange[1] - hypeMeterRange[0];
 
 
-        Debug.Log(hypeMeter +", " + hRange + ", " + hypeStepCount);
+        // Debug.Log(hypeMeter +", " + hRange + ", " + hypeStepCount);
         hypeStep = Mathf.Clamp( hypeMeter /(hRange / hypeStepCount), 0, hypeStepCount +1);
 
         lastFrameHype = hypeMeter;
@@ -86,6 +91,7 @@ public class CommentatorJung : MonoBehaviour
         hypeMeter -= (float)(0.3 * Time.deltaTime);
         hypeMeter = Mathf.Clamp(hypeMeter, hypeMeterRange[0], hypeMeterRange[1]);
 
+        hypeMeter = HypeMeter.Instance.HypePercent * 10;
         HypeCalculations();
 
         PressToHype();
@@ -93,7 +99,6 @@ public class CommentatorJung : MonoBehaviour
         animator.SetFloat("hypeStep", hypeStep);
         animator.SetInteger("hypeUpDown", hypeUpDown);
 
-
-
+        
     }
 }
