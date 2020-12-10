@@ -21,6 +21,7 @@ namespace Enemy
         [SerializeField] private float rayRadius;
         [SerializeField] private LayerMask rayLayerMask;
         [SerializeField] private Quaternion rayStartRotation;
+        [SerializeField] private float rayRotationSpeed = 2f;
 
         private EnemyMovement _movement;
 
@@ -71,8 +72,7 @@ namespace Enemy
             lineRenderer.enabled = true;
 
             rayTransform.localRotation = rayStartRotation;
-            rayTransform.DOLocalRotate(Vector3.zero, 4f);
-            
+            rayTransform.DOLocalRotate(Vector3.zero, rayRotationSpeed);
             _onCooldown = true;
 
             StopAllCoroutines();
