@@ -47,6 +47,11 @@ namespace Gameplay.HypeMeter
             SetCurrentHypePercent(_currentHypePercent + maxHypeGain * factor);
         }
 
+        public void AddAbsoluteHype(float amount)
+        {
+            SetCurrentHypePercent(_currentHypePercent + amount);
+        }
+
         private void SetCurrentHypePercent(float value)
         {
             _currentHypePercent = Mathf.Clamp(value, 0f, maxHype);

@@ -17,7 +17,10 @@ namespace Enemy
         private NavMeshAgent _navMeshAgent;
         
         [SerializeField] private Transform target;
-        [SerializeField] private Vector3 startingPosition;
+        public Transform Target => target;
+
+        [SerializeField]
+        private Vector3 startingPosition;
 
         [SerializeField] private float moveSpeed = 10f;
         [SerializeField] private float stoppingDistance = 10f;
@@ -26,10 +29,13 @@ namespace Enemy
 
         public event EventHandler TargetReached;
 
+        public void SetMoveSpeed(float newSpeed) => _navMeshAgent.speed = newSpeed;
+        public void ResetMoveSpeed() => _navMeshAgent.speed = moveSpeed;
+
         private void Start()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _navMeshAgent.speed = moveSpeed;
+            ResetMoveSpeed();
             _navMeshAgent.stoppingDistance = stoppingDistance;
             _navMeshAgent.destination = startingPosition;
         }
