@@ -25,7 +25,7 @@ MonoBehaviour:
         rotation: {x: 0, y: 0, z: 0, w: 0}
       - position: {x: -34, y: 0, z: 0}
         rotation: {x: 0, y: 0, z: 0, w: 0}
-    - prefab: {fileID: 1297115653656636237, guid: c1a0d215d8306eb4e9a867c13d5c9167, type: 3}
+    - prefab: {fileID: 4448988308425376361, guid: a53775dd4daadfc4b95124e15a88b16f, type: 3}
       amountToSpawn: 2
       positionsAndRotations:
       - position: {x: 0, y: 0, z: 36}
