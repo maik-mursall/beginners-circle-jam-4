@@ -12,7 +12,7 @@ public class CommentatorJung : MonoBehaviour
 
     [Header("Outputs")]
     [SerializeField]
-    private int hypeStep = 0;
+    private float hypeStep = 0;
     [SerializeField]
     private int hypeUpDown = 0;
 
@@ -35,19 +35,20 @@ public class CommentatorJung : MonoBehaviour
     [SerializeField]
     private float lastFrameHype = 0;
     [SerializeField]
-    private float sustainedHypeIncrease = 0;
+    private float hypeCombo = 0;
+    public GameObject Commentator;
 
 
     void HypeCalculations()
     {
         hypeDelta = hypeMeter - lastFrameHype;
-        sustainedHypeIncrease += hypeDelta;
+        hypeCombo += hypeDelta;
 
-        if (sustainedHypeIncrease > 0 + hypeUpDownDeadzone / 2)
+        if (hypeCombo > 0 + hypeUpDownDeadzone / 2)
         {
             hypeUpDown = 1;
         }
-        else if (sustainedHypeIncrease < 0 + hypeUpDownDeadzone / 2)
+        else if (hypeCombo < 0 + hypeUpDownDeadzone / 2)
         {
             hypeUpDown = -1;
         }
@@ -55,15 +56,15 @@ public class CommentatorJung : MonoBehaviour
         {
             hypeUpDown = 0;
         }
-        sustainedHypeIncrease -= sustainedHypeBleedOff * Time.deltaTime;
+        hypeCombo -= sustainedHypeBleedOff * Time.deltaTime;
 
-        sustainedHypeIncrease = Mathf.Clamp(sustainedHypeIncrease, 0, hypeMeterRange[1]);
+        hypeCombo = Mathf.Clamp(hypeCombo, 0, hypeMeterRange[1]);
 
         float hRange = hypeMeterRange[1] - hypeMeterRange[0];
 
 
-
-        hypeStep = Mathf.Clamp( Mathf.FloorToInt((hRange / hypeStepCount)), 0, hypeStepCount);
+        Debug.Log(hypeMeter +", " + hRange + ", " + hypeStepCount);
+        hypeStep = Mathf.Clamp( hypeMeter /(hRange / hypeStepCount), 0, hypeStepCount +1);
 
         lastFrameHype = hypeMeter;
     }
@@ -78,6 +79,9 @@ public class CommentatorJung : MonoBehaviour
     }
     void Update()
     {
+        // reset position
+        Commentator.transform.localPosition = Vector3.zero;
+
         // debug hypefunction::
         hypeMeter -= (float)(0.3 * Time.deltaTime);
         hypeMeter = Mathf.Clamp(hypeMeter, hypeMeterRange[0], hypeMeterRange[1]);
@@ -86,7 +90,7 @@ public class CommentatorJung : MonoBehaviour
 
         PressToHype();
 
-        animator.SetInteger("hypeStep", hypeStep);
+        animator.SetFloat("hypeStep", hypeStep);
         animator.SetInteger("hypeUpDown", hypeUpDown);
 
 
