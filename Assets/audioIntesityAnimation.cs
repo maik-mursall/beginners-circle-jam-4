@@ -18,7 +18,7 @@ public class audioIntesityAnimation : MonoBehaviour
         foreach (SpriteRenderer s in sprites)
         {
             Color c = Color.white;
-            c.a = Mathf.Clamp(audioIntensity, 0, 1);
+            c.a = Mathf.Clamp(audioIntensity * 2, 0, 1);
             s.color = c;
         }
     }
