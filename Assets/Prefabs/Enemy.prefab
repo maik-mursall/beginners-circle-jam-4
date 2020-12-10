@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  startingPosition: {x: 0, y: 0, z: 0}
+  staticPosition: {x: 0, y: 0, z: 0}
   moveSpeed: 5
-  stoppingDistance: 10
+  stoppingDistance: 15
 --- !u!114 &2039726439733108059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +149,11 @@ MonoBehaviour:
   damage: 20
   attackRange: 20
   attackSpeed: 20
+  attackMinCooldown: 5
+  attackMaxCooldown: 10
+  attackDuration: 5
+  minGoBackRange: 5
+  maxGoBackRange: 10
 --- !u!135 &2351938334833062083
 SphereCollider:
   m_ObjectHideFlags: 0

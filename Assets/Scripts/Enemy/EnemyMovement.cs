@@ -23,7 +23,7 @@ namespace Enemy
         private Vector3 staticPosition;
 
         [SerializeField] private float moveSpeed = 10f;
-        [SerializeField] private float stoppingDistance = 10f;
+        [SerializeField] private float stoppingDistance = 15f;
 
         private EnemyMovementState _currentMovementState = EnemyMovementState.GoingToStaticTarget;
         public EnemyMovementState CurrentMoveState => _currentMovementState;
