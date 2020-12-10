@@ -69,9 +69,10 @@ namespace Gameplay
 
         private void OnEnemyReachedStartPosition(object sender, EventArgs args)
         {
+            ((EnemyMovement) sender).TargetReached -= OnEnemyReachedStartPosition;
+
             if (--_enemiesRemainingToGoIntoPosition <= 0)
             {
-                ((EnemyMovement) sender).TargetReached -= OnEnemyReachedStartPosition;
                 StartBattle();
             }
         }
