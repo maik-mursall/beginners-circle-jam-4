@@ -7,8 +7,8 @@ namespace Enemy
     public enum EnemyMovementState
     {
         Idling,
-        GoingToStartPosition,
-        FollowingTarget
+        GoingToStaticTarget,
+        FollowingTarget,
     }
     
     [RequireComponent(typeof(NavMeshAgent))]
@@ -20,14 +20,17 @@ namespace Enemy
         public Transform Target => target;
 
         [SerializeField]
-        private Vector3 startingPosition;
+        private Vector3 staticPosition;
 
         [SerializeField] private float moveSpeed = 10f;
         [SerializeField] private float stoppingDistance = 10f;
 
-        private EnemyMovementState _currentMovementState = EnemyMovementState.GoingToStartPosition;
+        private EnemyMovementState _currentMovementState = EnemyMovementState.GoingToStaticTarget;
+        public EnemyMovementState CurrentMoveState => _currentMovementState;
 
         public event EventHandler TargetReached;
+
+        private bool _invokedTargetReachedEvent;
 
         public void SetMoveSpeed(float newSpeed) => _navMeshAgent.speed = newSpeed;
         public void ResetMoveSpeed() => _navMeshAgent.speed = moveSpeed;
@@ -37,7 +40,7 @@ namespace Enemy
             _navMeshAgent = GetComponent<NavMeshAgent>();
             ResetMoveSpeed();
             _navMeshAgent.stoppingDistance = stoppingDistance;
-            _navMeshAgent.destination = startingPosition;
+            _navMeshAgent.destination = staticPosition;
         }
 
         private void Update()
@@ -47,7 +50,7 @@ namespace Enemy
                 _navMeshAgent.destination = target.position;
             }
 
-            if (_currentMovementState == EnemyMovementState.GoingToStartPosition)
+            if (_currentMovementState == EnemyMovementState.GoingToStaticTarget)
             {
                 CheckIfReachedTarget();
             }
@@ -61,9 +64,16 @@ namespace Enemy
                 {
                     if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
                     {
-                        _currentMovementState = EnemyMovementState.Idling;
-
-                        TargetReached?.Invoke(this, EventArgs.Empty);
+                        if (_invokedTargetReachedEvent)
+                        {
+                            _currentMovementState = EnemyMovementState.FollowingTarget;
+                        }
+                        else
+                        {
+                            _currentMovementState = EnemyMovementState.Idling;
+                            _invokedTargetReachedEvent = true;
+                        }
+                        TargetReached?.Invoke(this, EventArgs.Empty);   
                     }
                 }
             }
@@ -78,14 +88,14 @@ namespace Enemy
             _currentMovementState = EnemyMovementState.FollowingTarget;
         }
 
-        public void SetStartingPosition(Vector3 newStartingPosition)
+        public void SetStaticPosition(Vector3 newStartingPosition)
         {
-            startingPosition = newStartingPosition;
-            _currentMovementState = EnemyMovementState.GoingToStartPosition;
+            staticPosition = newStartingPosition;
+            _currentMovementState = EnemyMovementState.GoingToStaticTarget;
 
             if (_navMeshAgent)
             {
-                _navMeshAgent.destination = startingPosition;
+                _navMeshAgent.destination = staticPosition;
             }
         }
 

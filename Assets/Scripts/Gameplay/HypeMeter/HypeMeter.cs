@@ -32,7 +32,7 @@ namespace Gameplay.HypeMeter
 
         private void Update()
         {
-            if (!_gameManager.IsGameRunning) return;
+            if (!_gameManager.IsGameRunning || SpawnManager.Instance.WaveIsPreparing) return;
 
             SetCurrentHypePercent(_currentHypePercent - hypeDegradationPerSecond * Time.deltaTime);
 

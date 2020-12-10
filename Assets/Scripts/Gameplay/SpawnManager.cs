@@ -71,6 +71,7 @@ namespace Gameplay
         {
             if (--_enemiesRemainingToGoIntoPosition <= 0)
             {
+                ((EnemyMovement) sender).TargetReached -= OnEnemyReachedStartPosition;
                 StartBattle();
             }
         }
@@ -97,7 +98,7 @@ namespace Gameplay
                     var enemyMovement = enemyInstance.GetComponent<EnemyMovement>();
                     _enemyMovementInstances.Add(enemyMovement);
                     enemyMovement.TargetReached += OnEnemyReachedStartPosition;
-                    enemyMovement.SetStartingPosition(relevantSpawn.position);
+                    enemyMovement.SetStaticPosition(relevantSpawn.position);
                 }
             }
         }
