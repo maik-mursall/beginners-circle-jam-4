@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Gameplay
@@ -53,8 +52,7 @@ namespace Gameplay
 
         public void BackToMenu()
         {
-            Debug.Log("GameManager:BackToMenu: Not Implemented");
-            Restart();
+            SceneManager.LoadScene(1);
         }
     }
 }
