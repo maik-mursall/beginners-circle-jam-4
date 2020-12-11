@@ -20,6 +20,8 @@ namespace Gameplay
     [System.Serializable]
     public struct Wave
     {
+        public AudioClip audioclipToPlayBeforeWaveStart;
+        public AudioClip audioclipToPlayAfterWaveWon;
         public WaveEnemyDescriptor[] enemiesToSpawn;
     }
     

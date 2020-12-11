@@ -10,9 +10,9 @@ namespace Gameplay.HypeMeter
         [SerializeField] private float maxHype = 100f;
         [SerializeField] private float hypeDegradationPerSecond = 1f;
         [SerializeField] private float maxHypeGain = 20f;
-        private float _currentHypePercent = 50f;
+        [SerializeField] private float currentHypePercent = 50f;
 
-        public float HypePercent => _currentHypePercent / maxHype;
+        public float HypePercent => currentHypePercent / maxHype;
         
         public event EventHandler HypeChanged;
 
@@ -34,9 +34,9 @@ namespace Gameplay.HypeMeter
         {
             if (!_gameManager.IsGameRunning || SpawnManager.Instance.WaveIsPreparing) return;
 
-            SetCurrentHypePercent(_currentHypePercent - hypeDegradationPerSecond * Time.deltaTime);
+            SetCurrentHypePercent(currentHypePercent - hypeDegradationPerSecond * Time.deltaTime);
 
-            if (_currentHypePercent <= 0f)
+            if (currentHypePercent <= 0f)
             {
                 _gameManager.GameOver();
             }
@@ -44,17 +44,17 @@ namespace Gameplay.HypeMeter
 
         public void AddRelativeHype(float factor)
         {
-            SetCurrentHypePercent(_currentHypePercent + maxHypeGain * factor);
+            SetCurrentHypePercent(currentHypePercent + maxHypeGain * factor);
         }
 
         public void AddAbsoluteHype(float amount)
         {
-            SetCurrentHypePercent(_currentHypePercent + amount);
+            SetCurrentHypePercent(currentHypePercent + amount);
         }
 
         private void SetCurrentHypePercent(float value)
         {
-            _currentHypePercent = Mathf.Clamp(value, 0f, maxHype);
+            currentHypePercent = Mathf.Clamp(value, 0f, maxHype);
             
             HypeChanged?.Invoke(this, EventArgs.Empty);
         }
