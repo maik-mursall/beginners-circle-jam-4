@@ -56,7 +56,7 @@ public class Camera2DFollow : MonoBehaviour
             //Debug.Log("x :: " + xMoveDelta + "    y :: " + zMoveDelta);
             Vector3 m_lookAheadPosi = new Vector3(m_LookAheadPosX, 0, m_LookAheadPosZ);
 
-            Debug.Log("zoomLookAheadCurve.Evaluate(zoomFactorNormalised) :: " + zoomLookAheadCurve.Evaluate(zoomFactorNormalised));
+            // Debug.Log("zoomLookAheadCurve.Evaluate(zoomFactorNormalised) :: " + zoomLookAheadCurve.Evaluate(zoomFactorNormalised));
 
             m_lookAheadPosi *= zoomLookAheadCurve.Evaluate(zoomFactorNormalised);
 

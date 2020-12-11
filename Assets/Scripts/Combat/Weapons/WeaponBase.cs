@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gameplay.HypeMeter;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Combat.Weapons
 {
