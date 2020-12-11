@@ -24,12 +24,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213385473}
-  m_LocalRotation: {x: 0.0072027887, y: -0.9202371, z: 0.3910306, w: -0.014381483}
-  m_LocalPosition: {x: -0.0125, y: 0.019, z: 0.007}
-  m_LocalScale: {x: 0.003164217, y: 0.0025498972, z: 0.0025134988}
+  m_LocalRotation: {x: -0, y: -0.0000000015023047, z: 0.0000000054535714, w: 1}
+  m_LocalPosition: {x: 2.396, y: -1.1326542, z: -1.86}
+  m_LocalScale: {x: 0.16843823, y: 0.16843824, z: 0.16843817}
   m_Children: []
-  m_Father: {fileID: 2374653880461932138}
-  m_RootOrder: 1
+  m_Father: {fileID: 488761066}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &213385475
 SpriteRenderer:
@@ -109,7 +109,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.6090403, y: 4.7861605, z: 0.7005081}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 213385474}
+  - {fileID: 1941190984}
   m_Father: {fileID: 4009564724269612422}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,12 +155,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941190983}
-  m_LocalRotation: {x: 0.0072027887, y: -0.9202371, z: 0.3910306, w: -0.014381483}
-  m_LocalPosition: {x: 0.0147, y: 0.019, z: 0.007}
-  m_LocalScale: {x: 0.003164217, y: 0.0025498972, z: 0.0025134988}
+  m_LocalRotation: {x: -0, y: -0.0000000015023047, z: 0.0000000054535714, w: 1}
+  m_LocalPosition: {x: 0.813, y: -1.1374264, z: -1.7837334}
+  m_LocalScale: {x: 0.16843823, y: 0.16843824, z: 0.16843817}
   m_Children: []
-  m_Father: {fileID: 2374653880461932138}
-  m_RootOrder: 2
+  m_Father: {fileID: 488761066}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1941190985
 SpriteRenderer:
@@ -257,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hypeMeter: 0
-  hypeMeterRange: {x: 0, y: 1}
+  hypeMeterRange: {x: 0, y: 10}
   animator: {fileID: 0}
   hypeStep: 0
   hypeUpDown: 0
@@ -341,11 +343,6 @@ GameObject:
 --- !u!4 &3471831809386476054 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c805a6c5853ca024bacb943389d90fdf, type: 3}
-  m_PrefabInstance: {fileID: 4009564724854035965}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2374653880461932138 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1680021610179011479, guid: c805a6c5853ca024bacb943389d90fdf, type: 3}
   m_PrefabInstance: {fileID: 4009564724854035965}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4009564725424220241

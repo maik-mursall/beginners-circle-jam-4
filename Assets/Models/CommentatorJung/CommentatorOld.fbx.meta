@@ -1,8 +1,14 @@
 fileFormatVersion: 2
-guid: 098ff5e018b64a6409bb035c40059c32
+guid: 625893a2bc8735a40a9c313afc875a35
 ModelImporter:
   serializedVersion: 20101
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -819437124513494258
+    second: rig|Old_SittingExplaining
+  - first:
+      74: 1663775922130546476
+    second: BezierCircle|Old_SittingExplaining
   externalObjects: {}
   materials:
     materialImportMode: 1
