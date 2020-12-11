@@ -21,7 +21,7 @@ namespace Gameplay.HypeMeter
         private void OnHypeChanged(object src, EventArgs args)
         {
             slider.DOKill();
-            slider.DOValue(_hypeMeter.HypePercent, 1f);
+            slider.DOValue(_hypeMeter.HypePercent, 0.5f);
         }
     }
 }
