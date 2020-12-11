@@ -28,6 +28,7 @@ namespace Gameplay
         // Start is called before the first frame update
         void Start()
         {
+            _enemy = FindObjectOfType<EnemyBase>();
             _enemy.OnEnemyDeath += EnemyDeath;
         }
 
