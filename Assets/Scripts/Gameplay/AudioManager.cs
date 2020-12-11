@@ -35,11 +35,7 @@ namespace Gameplay
         // Update is called once per frame
         void Update()
         {
-            if(_gameManager.IsGameOver)
-            {
-                _audioSource.clip = _verloren;
-                _audioSource.Play();
-            }           
+                       
 
         }
 
