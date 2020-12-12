@@ -38,6 +38,9 @@ namespace Combat.Weapons
         [SerializeField] private string animatorAttackString;
         public int AnimatorAttackHash { get; private set; }
 
+        public AudioClip hitClip;
+        public AudioClip missClip;
+
         private readonly HashSet<DamageHitInfo> _hitList = new HashSet<DamageHitInfo>();
 
         protected bool IsAttacking;
@@ -85,6 +88,19 @@ namespace Combat.Weapons
         private void Start()
         {
             _hypeMeter = HypeMeter.Instance;
+        }
+
+        private void PlayAudio (bool hit)
+        {
+            if (hit)
+            {
+                GetComponent<AudioSource>().PlayOneShot(hitClip);
+            }
+            else
+            {
+                GetComponent<AudioSource>().PlayOneShot(missClip);
+            }
+            
         }
 
         private void EvaluateAttack(DamageHitInfo hitInfo)
