@@ -9,6 +9,7 @@ public class crowdAnimation : MonoBehaviour
 
     public Vector2 sinOffsetRange = new Vector2(0, 1);
     public Vector2 zScaleRange = new Vector2(0.8f, 1.2f);
+    [Range(0,2)]
     public float sinSpeed = 1f;
 
     public struct CrowdArmStruct
@@ -39,7 +40,13 @@ public class crowdAnimation : MonoBehaviour
     {
         foreach(CrowdArmStruct cas in crowdArmStructs)
         {
-            float sinValue = Mathf.Sin((Time.time + cas.sinOffset) * sinSpeed * HypeMeter.Instance.HypePercent );
+            float hypeValue = 1;
+            if(HypeMeter.Instance != null)
+            {
+                hypeValue = HypeMeter.Instance.HypePercent;
+            }
+
+            float sinValue = Mathf.Sin((Time.time + cas.sinOffset) * sinSpeed * hypeValue);
             sinValue = sinValue / 2 + 1;
             sinValue = sinValue * (zScaleRange[1] - zScaleRange[0]) + zScaleRange[0];
             cas.ArmTransform.localScale = new Vector3(1, 1, sinValue);
