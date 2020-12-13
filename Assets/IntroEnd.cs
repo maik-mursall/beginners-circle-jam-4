@@ -7,6 +7,6 @@ public class IntroEnd : MonoBehaviour
 {
     public void EndIntro()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }
